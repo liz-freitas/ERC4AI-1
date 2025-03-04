@@ -21,11 +21,11 @@ class RequirementsController < ApplicationController
 
   # POST /requirements or /requirements.json
   def create
-    @requirement = Requirement.new(requirement_params)
+    @requirement = Requirement.new(**requirement_params, session: Current.session)
 
     respond_to do |format|
       if @requirement.save
-        format.html { redirect_to @requirement, notice: "Requirement was successfully created." }
+        format.html { redirect_to [Current.session, @requirement], notice: "Requirement was successfully created." }
         format.json { render :show, status: :created, location: @requirement }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class RequirementsController < ApplicationController
   def update
     respond_to do |format|
       if @requirement.update(requirement_params)
-        format.html { redirect_to @requirement, notice: "Requirement was successfully updated." }
+        format.html { redirect_to [Current.session, @requirement], notice: "Requirement was successfully updated." }
         format.json { render :show, status: :ok, location: @requirement }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class RequirementsController < ApplicationController
     @requirement.destroy!
 
     respond_to do |format|
-      format.html { redirect_to requirements_path, status: :see_other, notice: "Requirement was successfully destroyed." }
+      format.html { redirect_to session_requirements_path(Current.session), status: :see_other, notice: "Requirement was successfully destroyed." }
       format.json { head :no_content }
     end
   end
