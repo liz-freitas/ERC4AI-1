@@ -1,7 +1,7 @@
 class Session < ApplicationRecord
   self.primary_key = 'uuid'
 
-  has_many :requirements, dependent: :destroy
+  has_many :requirements, dependent: :destroy, foreign_key: :session_uuid, primary_key: :uuid
 
   validates :uuid, presence: true, uniqueness: true
 

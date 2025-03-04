@@ -3,7 +3,7 @@ class RequirementsController < ApplicationController
 
   # GET /requirements or /requirements.json
   def index
-    @requirements = Requirement.all
+    @requirements = Current.session.requirements.order(updated_at: :desc).limit(10)
   end
 
   # GET /requirements/1 or /requirements/1.json
