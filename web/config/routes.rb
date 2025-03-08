@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "sessions#new"
 
-  resources :sessions, only: [:new] do
+  resources :sessions, only: [:new, :show, :index] do
     resources :requirements
   end
 
