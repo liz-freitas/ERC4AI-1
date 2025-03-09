@@ -206,7 +206,6 @@ GEM
     public_suffix (6.0.1)
     puma (6.6.0)
       nio4r (~> 2.0)
-    pycall (1.5.2)
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.10)
@@ -387,7 +386,6 @@ DEPENDENCIES
   kamal
   propshaft
   puma (>= 5.0)
-  pycall
   rails (~> 8.0.1)
   rubocop-rails-omakase
   selenium-webdriver

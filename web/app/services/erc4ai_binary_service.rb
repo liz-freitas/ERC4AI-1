@@ -8,12 +8,13 @@ class Erc4aiBinaryService < ApplicationService
   end
 
   def call
-    prediction = Python.erc4ai_binary_service.predict(@texts)
+    prediction = `python3 app/python/services/erc4ai_binary_service.py "#{@texts.join('" "')}"`
+    prediction = prediction.split("\n\n").map { |p| p.split("\n").last }
     
     @texts.each_with_index.map do |text, i|
       {
         text: text,
-        prediction: prediction[0][i] == 1,
+        prediction: prediction[i] == '1',
       }
     end
   end
