@@ -1,5 +1,7 @@
 class ClassifyRequirementJob < ApplicationJob
-  queue_as :default
+  queue_as :classification
+
+  limits_concurrency to: 1, key: ->(_, _) { 'ClassifyRequirementJob' }
 
   def perform(requirement_id, classification_type)
     requirement = Requirement.find(requirement_id)
