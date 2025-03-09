@@ -1,5 +1,4 @@
-<%#= turbo_stream_from dom_id(requirement) %>
-<%= turbo_stream_from "#{requirement.session_uuid}/requirements" %>
+<%= turbo_stream_from "#{requirement.session_uuid}/requirements" unless requirement.classified? || requirement.error? %>
 
 <%= turbo_frame_tag requirement do %>
   <div id="<%= dom_id requirement %>" class="w-full sm:w-auto space-y-5">
