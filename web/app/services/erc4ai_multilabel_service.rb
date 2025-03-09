@@ -8,13 +8,14 @@ class Erc4aiMultilabelService < ApplicationService
   end
 
   def call
-    labels = Python.erc4ai_multilabel_service.target_names
-    prediction = Python.erc4ai_multilabel_service.predict(@texts)
+    prediction = `python3 app/python/services/erc4ai_multilabel_service.py "#{@texts.join('" "')}"`
+    prediction = prediction.split("\n\n").map { |p| p.split("\n")[1..] }
+
     
     @texts.each_with_index.map do |text, i|
       {
         text: text,
-        labels: labels.zip(prediction[0][i]).select { |_, v| v == 1 }.map(&:first)
+        labels: prediction[i]
       }
     end
   end
