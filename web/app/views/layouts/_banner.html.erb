@@ -1,0 +1,32 @@
+<div class="w-full md:w-2/3 py-6 my-6 mx-auto relative flex flex-col items-center justify-center rounded-xl bg-gray-900 overflow-hidden">
+  <h1 class="text-6xl font-bold text-transparent bg-clip-text animate-gradient">
+    ERC4AI
+  </h1>
+
+  <!-- Description -->
+  <div>
+    <p class="text-white text-center mt-5">
+      The European Union's Ethics Guidelines for Trustworthy AI
+    </p>
+  </div>
+
+  <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 opacity-25"></div>
+</div>
+
+<style>
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  } 
+}
+
+.animate-gradient {
+  /* purple to pink to indigo */
+  background-image: linear-gradient(90deg, #ad46ff, #615fff, #f6339a, #F43B86, #ad46ff, #615fff, #f6339a, #F43B86, #ad46ff);
+  background-size: 200% 200%;
+  animation: gradient 4s linear infinite ;
+}
+</style>
