@@ -3,7 +3,7 @@ class RequirementsController < ApplicationController
 
   # GET /requirements or /requirements.json
   def index
-    @requirements = Current.session.requirements.order(updated_at: :desc).limit(6)
+    @requirements = Current.session.requirements.order(created_at: :desc).limit(6)
   end
 
   # GET /requirements/1 or /requirements/1.json
@@ -70,7 +70,6 @@ class RequirementsController < ApplicationController
     end
 
     def run_classification
-      @requirement.run_binary_classification if params[:requirement][:classification_type] == "binary"
-      @requirement.run_multilabel_classification if params[:requirement][:classification_type] == "multilabel"
+      ClassifyRequirementJob.perform_later(@requirement.id, params[:requirement][:classification_type])
     end
 end
