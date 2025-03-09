@@ -3,7 +3,7 @@ class RequirementsController < ApplicationController
 
   # GET /requirements or /requirements.json
   def index
-    @requirements = Current.session.requirements.order(created_at: :desc).limit(6)
+    @requirements = requirements
   end
 
   # GET /requirements/1 or /requirements/1.json
@@ -29,7 +29,9 @@ class RequirementsController < ApplicationController
         format.html { redirect_to session_requirements_path(Current.session), notice: "Requirement was successfully created." }
         format.json { render :show, status: :created, location: @requirement }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        @requirements = requirements
+
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @requirement.errors, status: :unprocessable_entity }
       end
     end
@@ -67,6 +69,10 @@ class RequirementsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def requirement_params
       params.expect(requirement: [ :content, :ethic ])
+    end
+
+    def requirements
+      @requirements = Current.session.requirements.order(created_at: :desc).limit(6)
     end
 
     def run_classification

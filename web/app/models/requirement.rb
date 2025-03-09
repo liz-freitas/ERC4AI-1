@@ -7,6 +7,8 @@ class Requirement < ApplicationRecord
 
   enum :status, { pending: 0, running_classification: 1, classified: 2, error: 3 }
 
+  validates :content, presence: true, length: { maximum: 1000 }
+
   def run_binary_classification
     self.ethic = Erc4aiBinaryService.new(content).call.first[:prediction]
     
