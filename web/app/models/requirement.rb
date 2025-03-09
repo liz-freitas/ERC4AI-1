@@ -9,6 +9,9 @@ class Requirement < ApplicationRecord
 
   validates :content, presence: true, length: { maximum: 1000 }
 
+  # Stream to turbo-stream
+  after_update_commit { broadcast_update_to "#{session_uuid}/requirements", target: "requirement_#{id}", partial: "requirements/requirement", locals: { requirement: self } }
+
   def run_binary_classification
     self.ethic = Erc4aiBinaryService.new(content).call.first[:prediction]
     

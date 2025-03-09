@@ -26,7 +26,8 @@ class RequirementsController < ApplicationController
     respond_to do |format|
       if @requirement.save
         run_classification
-        format.html { redirect_to session_requirements_path(Current.session), notice: "Requirement was successfully created." }
+
+        format.html { redirect_to session_requirements_path(Current.session) }
         format.json { render :show, status: :created, location: @requirement }
       else
         @requirements = requirements
