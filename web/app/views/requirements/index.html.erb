@@ -1,34 +1,37 @@
 <% content_for :title, "Requirements" %>
 
-<div class="w-full">
+<div class="w-full md:w-2/3 mx-auto">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block w-full" id="notice"><%= notice %></p>
   <% end %>
 
-  <div>
+  <div class="w-full bg-white shadow-lg rounded-lg p-6 mb-5">
     <%= render "requirements/new", requirement: Requirement.new %>
   </div>
   
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Requirements</h1>
-  </div>
+  <div class="bg-white shadow-lg rounded-lg p-9">
+    <div class="flex justify-between items-center">
+      <h1 class="font-bold text-4xl">Last Requirements</h1>
+    </div>
 
-  <div id="requirements" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @requirements.any? %>
-      <% @requirements.each do |requirement| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render requirement %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", [Current.session, requirement], class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_session_requirement_path(Current.session, requirement), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <div class="sm:inline-block">
-              <%= button_to "Destroy", [Current.session, requirement], method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+    <div id="requirements" class="grid grid-cols-1 lg:grid-cols-3 gap-5 p-6">
+      <% if @requirements.any? %>
+        <% @requirements.each do |requirement| %>
+          <div class="relative border-1 border-gray-400 rounded-lg p-6 pb-24">
+            <%= render requirement %>
+
+            <div class="absolute bottom-0 border-t-1 border-t-gray-400 flex justify-end space-x-2 py-4 w-full -translate-x-6 px-4">
+              <%= link_to "Show", [Current.session, requirement], class: "text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+              <%= link_to "Edit", edit_session_requirement_path(Current.session, requirement), class: "text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+              <div class="inline-block">
+                <%= button_to "Destroy", [Current.session, requirement], method: :delete, class: "rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
+      <% else %>
+        <p class="text-center my-10">No requirements found.</p>
       <% end %>
-    <% else %>
-      <p class="text-center my-10">No requirements found.</p>
-    <% end %>
+    </div>
   </div>
 </div>
