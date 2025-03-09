@@ -1,4 +1,6 @@
 class RequirementsController < ApplicationController
+  include ActionView::RecordIdentifier # adds `dom_id`
+
   before_action :set_requirement, only: %i[ show edit update destroy ]
 
   # GET /requirements or /requirements.json
@@ -27,7 +29,7 @@ class RequirementsController < ApplicationController
       if @requirement.save
         run_classification
 
-        format.html { redirect_to session_requirements_path(Current.session), anchor: "requirement_#{@requirement.id}" }
+        format.html { redirect_to session_requirements_path(Current.session, anchor: dom_id(@requirement)) }
         format.json { render :show, status: :created, location: @requirement }
       else
         @requirements = requirements
