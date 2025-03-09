@@ -27,7 +27,7 @@ class RequirementsController < ApplicationController
       if @requirement.save
         run_classification
 
-        format.html { redirect_to session_requirements_path(Current.session) }
+        format.html { redirect_to session_requirements_path(Current.session, anchor: "requirement_#{@requirement.id}") }
         format.json { render :show, status: :created, location: @requirement }
       else
         @requirements = requirements
