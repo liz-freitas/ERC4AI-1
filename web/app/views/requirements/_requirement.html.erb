@@ -7,17 +7,19 @@
     Created <%= time_ago_in_words(requirement.created_at) %> ago
   </div>
 
-  <div>
-    <% if requirement.ethic? %>
-      <span class="px-2 py-1 border-2 border-green-300 rounded-full text-sm text-gray-800">
-        Ethical Principle
-      </span>
-    <% else %>
-      <span class="px-2 py-1 border-2 border-red-300 rounded-full text-sm text-gray-800">
-        Non-Ethical Principle
-      </span>
-    <% end %>
-  </div>
+  <% unless requirement.ethic.nil? %>
+    <div>
+      <% if requirement.ethic? %>
+        <span class="px-2 py-1 border-2 border-green-300 rounded-full text-sm text-gray-800">
+          Ethical Principle
+        </span>
+      <% else %>
+        <span class="px-2 py-1 border-2 border-red-300 rounded-full text-sm text-gray-800">
+          Non-Ethical Principle
+        </span>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if requirement.erc4ai_classes.present? %>
     <div>

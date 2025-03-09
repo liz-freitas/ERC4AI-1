@@ -5,12 +5,7 @@ class Requirement < ApplicationRecord
 
   serialize :erc4ai_classes, type: Array, coder: JSON
 
-  after_create :evaluate_ethical_requirement
-  after_create :evaluate_ethical_classes
-
-  private
-
-  def evaluate_ethical_requirement
+  def run_binary_classification
     self.ethic = Erc4aiBinaryService.new(content).call.first[:prediction]
     
     Rails.logger.info("Requirement #{id} has been classified as #{ethic}")
@@ -18,7 +13,7 @@ class Requirement < ApplicationRecord
     save
   end
 
-  def evaluate_ethical_classes
+  def run_multilabel_classification
     self.erc4ai_classes = Erc4aiMultilabelService.new([content]).call.first&.fetch(:labels, [])
     
     Rails.logger.info("Requirement #{id} has been classified as #{erc4ai_classes}")

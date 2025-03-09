@@ -25,6 +25,7 @@ class RequirementsController < ApplicationController
 
     respond_to do |format|
       if @requirement.save
+        run_classification
         format.html { redirect_to session_requirements_path(Current.session), notice: "Requirement was successfully created." }
         format.json { render :show, status: :created, location: @requirement }
       else
@@ -66,5 +67,10 @@ class RequirementsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def requirement_params
       params.expect(requirement: [ :content, :ethic ])
+    end
+
+    def run_classification
+      @requirement.run_binary_classification if params[:requirement][:classification_type] == "binary"
+      @requirement.run_multilabel_classification if params[:requirement][:classification_type] == "multilabel"
     end
 end
