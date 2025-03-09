@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_03_191759) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_001904) do
   create_table "requirements", force: :cascade do |t|
     t.string "content"
     t.boolean "ethic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "session_uuid", limit: 36
+    t.string "erc4ai_classes"
     t.index ["session_uuid"], name: "index_requirements_on_session_uuid"
   end
 
