@@ -8,14 +8,20 @@ class Erc4aiBinaryService < ApplicationService
   end
 
   def call
-    prediction = `python3 app/python/services/erc4ai_binary_service.py "#{@texts.join('" "')}"`
-    prediction = prediction.split("\n\n").map { |p| p.split("\n").last }
-    
-    @texts.each_with_index.map do |text, i|
-      {
-        text: text,
-        prediction: prediction[i] == '1',
-      }
+    command = ['python3', 'app/python/services/erc4ai_binary_service.py', *@texts]
+    stdout, stderr, status = Open3.capture3(*command)
+
+    if status.success?
+      prediction = stdout.split("\n\n").map { |p| p.split("\n").last }
+      
+      @texts.each_with_index.map do |text, i|
+        {
+          text: text,
+          prediction: prediction[i] == '1',
+        }
+      end
+    else
+      raise "Command failed with error: #{stderr}"
     end
   end
 end

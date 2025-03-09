@@ -8,15 +8,20 @@ class Erc4aiMultilabelService < ApplicationService
   end
 
   def call
-    prediction = `python3 app/python/services/erc4ai_multilabel_service.py "#{@texts.join('" "')}"`
-    prediction = prediction.split("\n\n").map { |p| p.split("\n")[1..] }
+    command = ['python3', 'app/python/services/erc4ai_multilabel_service.py', *@texts]
+    stdout, stderr, status = Open3.capture3(*command)
 
-    
-    @texts.each_with_index.map do |text, i|
-      {
-        text: text,
-        labels: prediction[i]
-      }
+    if status.success?
+      prediction = stdout.split("\n\n").map { |p| p.split("\n")[1..] }
+      
+      @texts.each_with_index.map do |text, i|
+        {
+          text: text,
+          labels: prediction[i]
+        }
+      end
+    else
+      raise "Command failed with error: #{stderr}"
     end
   end
 end
