@@ -3,7 +3,7 @@ from simpletransformers.classification import MultiLabelClassificationModel
 from text_preprocess import preprocess_text
 
 model_path = "./app/python/models/ERC4AI-Multilabel/"
-target_names = ['Transparency', 'Trust', 'Privacy', 'Responsibility', 'Others Principles', 'Non Ethical Principle']
+target_names = ["Transparency", "Trust", "Privacy", "Other Principle", "Non-Ethical Principle" ]
 texts = sys.argv[1:]
 preprocessed_texts = [preprocess_text(text) for text in texts]
 
